@@ -14,7 +14,7 @@ Task = React.createClass({
 	},
 
 	deleteThisTask(){
-		Task.remove(this.props.task._id);
+		Tasks.remove(this.props.task._id);
 	},
 
 	render: function(){
@@ -35,7 +35,9 @@ Task = React.createClass({
 						check={ this.props.task.checked }
 						onClick={ this.toggleChecked } />
 
-					<span className="text">{ this.props.task.text }</span>
+					<span className="text">
+						<strong>{ this.props.task.username }</strong>: {this.props.task.text}
+					</span>
 
 				</li>
 			)
