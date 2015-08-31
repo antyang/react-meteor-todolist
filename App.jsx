@@ -37,7 +37,9 @@ App = React.createClass({
 
 	renderTasks(){
 		return /**this.getTasks().map*/this.data.tasks.map((task) => {
-			return <Task key={ task._id } task ={ task } />
+			const currentUserId = this.data.currentUser && this.data.currentUser._id;
+			const showPrivateButton = task.owner === currentUserId;
+			return <Task key={ task._id } task ={ task } showPrivateButton={ showPrivateButton }/>
 		});
 	},
 
@@ -83,7 +85,7 @@ App = React.createClass({
 							Hide Completed Tasks
 						</label>
 
-						<AccountsUIWrapper/> Welcome { this.data.currentUser.username }
+						<AccountsUIWrapper/> Welcome { this.data.username }
 
 						{ this.data.currentUser ?
 						<form onSubmit={ this.handleSubmit } className="new-task">
