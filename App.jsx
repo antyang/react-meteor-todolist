@@ -1,4 +1,17 @@
 App = React.createClass({
+
+	// this misxin makes the getMeteorData method work
+	mixins: [ReactMeteorData],
+	
+	// loads items from the Tasks collection and puts them on this.data.tasks
+	getMeteorData(){
+		return {
+			tasks: Tasks.find({}).fetch()
+		}
+	},
+
+
+	/** Hardedcode Dummydata
 	getTasks(){
 		return [
 		{_id: 1, text: 'This is task 1'},
@@ -6,9 +19,10 @@ App = React.createClass({
 		{_id: 3, text: 'This is task 3'},
 		]
 	},
+	*/
 
 	renderTasks(){
-		return this.getTasks().map( (task)=> {
+		return /**this.getTasks().map*/this.data.tasks.map((task) => {
 			return <Task key={ task._id } task ={ task } />
 		});
 	},
