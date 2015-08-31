@@ -50,7 +50,10 @@ App = React.createClass({
 						<h1>Todo List</h1>
 						
 						<form onSubmit={ this.handleSubmit } className="new-task">
-							<input type="text" ref="textInput" placeholder="Type to add new tasks"/>
+							<input 
+								type="text" 
+								ref="textInput" 
+								placeholder="Type to add new tasks" />
 						</form>
 					</header>
 
