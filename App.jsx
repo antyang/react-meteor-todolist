@@ -3,11 +3,24 @@ App = React.createClass({
 	// this mixins makes the getMeteorData method work
 	mixins: [ReactMeteorData],
 	
+	getInitialState(){
+		return {
+			hideCompleted: false
+		}
+	},
+
 	// loads items from the Tasks collection and puts them on this.data.tasks
 	getMeteorData(){
-		return {
-			tasks: Tasks.find({}, {sort: {createdAt: -1} }).fetch()
+		let query = {};
+
+		if (this.state.hideCompleted){
+			// if hideCompleted is checked, filter tasks
+			query = { checked: {$ne: true} };
 		}
+		return {
+			tasks: Tasks.find(query, {sort: {createdAt: -1} }).fetch(),
+			incompleteCount: Tasks.find( { checked: {$ne: true} } ).count()
+		};
 	},
 
 
@@ -43,12 +56,28 @@ App = React.createClass({
 		React.findDOMNode(this.refs.textInput).value = "";
 	},
 
+	// hide function
+	toggleHideCompleted(){
+		this.setState({
+			hideCompleted: ! this.state.hideCompleted
+		})
+	},
+
 	render: function(){
 		return (
 				<div className="container">
 					<header>
-						<h1>Todo List</h1>
+						<h1>Todo List ({this.data.incompleteCount})</h1>
 						
+						<label className="hide-completed">
+							<input 
+								type="checkbox"
+								readOnly={true}
+								checked={this.state.hideCompleted}
+								onClick={this.toggleHideCompleted}/>
+							Hide Completed Tasks
+						</label>
+
 						<form onSubmit={ this.handleSubmit } className="new-task">
 							<input 
 								type="text" 
