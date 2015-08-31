@@ -48,12 +48,14 @@ App = React.createClass({
 		var text = React.findDOMNode(this.refs.textInput).value.trim();
 
 		// inserting into collection
-		Tasks.insert({
-			text: text,
-			createdAt: new Date(), 					// current time
-			owner: Meteor.userId(),					// _id of logged in user
-			username: Meteor.user().username 	// username of logged in user
-		});
+		// Tasks.insert({
+		// 	text: text,
+		// 	createdAt: new Date(), 					// current time
+		// 	owner: Meteor.userId(),					// _id of logged in user
+		// 	username: Meteor.user().username 	// username of logged in user
+		// });
+//to
+		Meteor.call("addTask", text);
 
 		// clear form
 		React.findDOMNode(this.refs.textInput).value = "";
